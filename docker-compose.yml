@@ -1,0 +1,36 @@
+version: '3.1'
+services:
+  e-commerce-database:
+    container_name: e-commerce-db
+    image: mysql/mysql-server:5.7
+    environment:
+      MYSQL_DATABASE: e-commerce
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_ROOT_HOST: '%'
+      MYSQL_USER: root
+    ports:
+      - "3306:3306"
+    restart: always
+  e-commerce-backend:  
+    container_name: e-commerce-back
+    build: backend/
+    ports:
+      - 8181:8181
+    networks:
+      - e-commerce-network
+    command: mvn clean spring-boot:run
+    depends_on:
+      - e-commerce-database
+  e-commerce-fronted:
+    container_name: e-commerce-front
+    build: frontend/
+    ports:
+      - 8080:80
+    networks:
+      - e-commerce-network
+    depends_on:
+      - e-commerce-backend
+
+networks: 
+  e-commerce-network:
+    driver: bridge
