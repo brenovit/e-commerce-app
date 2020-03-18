@@ -15,6 +15,8 @@ export class SalesPersonListComponent implements OnInit {
     new SalesPerson("Lucio", "Djaka", "email5@email.com", 498940)
   ];
 
+  minimunQuota: number = 5000;
+
   constructor() {}
 
   ngOnInit() {}

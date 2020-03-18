@@ -6,6 +6,7 @@
       <th scope="col">Last Name</th>
       <th scope="col">Email</th>
       <th scope="col">Sales Volume</th>
+      <th scope="col" class="text-center">Met Quota?</th>
     </tr>
   </thead>
   <tbody>
@@ -21,7 +22,13 @@
         {{ salesPerson.email }}
       </td>
       <td>
-        {{ salesPerson.salesVolume }}
+        {{ salesPerson.salesVolume | currency: "BRL" }}
+      </td>
+      <td class="text-center">
+        <div *ngIf="salesPerson.salesVolume >= minimunQuota; else elseBlock">
+          Yes
+        </div>
+        <ng-template #elseBlock>No</ng-template>
       </td>
     </tr>
   </tbody>
