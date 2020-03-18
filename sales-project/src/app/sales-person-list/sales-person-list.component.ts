@@ -9,10 +9,10 @@ import { SalesPerson } from "./sales-person";
 export class SalesPersonListComponent implements OnInit {
   salesPersonList: SalesPerson[] = [
     new SalesPerson("Lamar", "Franco", "email1@email.com", 50000),
-    new SalesPerson("Ramar", "Frenco", "email2@email.com", 100000),
-    new SalesPerson("Jamar", "Frinco", "email3@email.com", 4000),
-    new SalesPerson("Tamar", "Fronco", "email4@email.com", 100),
-    new SalesPerson("Zamar", "Frunco", "email5@email.com", 498940)
+    new SalesPerson("Xavier", "Eyed", "email2@email.com", 100000),
+    new SalesPerson("Juanda", "Murphy", "email3@email.com", 4000),
+    new SalesPerson("Patricia", "Lutiela", "email4@email.com", 100),
+    new SalesPerson("Lucio", "Djaka", "email5@email.com", 498940)
   ];
 
   constructor() {}
