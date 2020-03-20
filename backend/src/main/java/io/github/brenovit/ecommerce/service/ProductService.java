@@ -22,8 +22,8 @@ public class ProductService extends InternalService {
 	@Autowired
 	private ProductRepository repository;
 	
-	public List<Product> findAll(){
-		return repository.findAll();
+	public List<ProductResponse> findAll(){
+		return parse(repository.findAll());
 	}
 	
 	@SneakyThrows

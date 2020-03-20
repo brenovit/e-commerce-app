@@ -1,9 +1,15 @@
 package io.github.brenovit.ecommerce.controller;
 
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
+import org.springframework.hateoas.CollectionModel;
+import org.springframework.hateoas.EntityModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -15,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.github.brenovit.ecommerce.assembler.ProducResponsetModelAssembler;
 import io.github.brenovit.ecommerce.models.Product;
 import io.github.brenovit.ecommerce.payload.product.ProductRequest;
 import io.github.brenovit.ecommerce.payload.product.ProductResponse;
@@ -28,10 +35,14 @@ import lombok.RequiredArgsConstructor;
 public class ProductRestController {
 
 	private final ProductService service;
-		
+	private final ProducResponsetModelAssembler assembler;
+
 	@GetMapping	
-	public ResponseEntity<List<Product>> findAll() {
-		return ResponseEntity.ok(service.findAll());
+	public CollectionModel<EntityModel<ProductResponse>> findAll() {
+		List<EntityModel<ProductResponse>> products = service.findAll().stream()
+				.map(assembler::toModel)
+				.collect(Collectors.toList());
+		return new CollectionModel<>(products, linkTo(methodOn(ProductRestController.class).findAll()).withSelfRel());		
 	}		
 
 	@PostMapping
@@ -40,8 +51,8 @@ public class ProductRestController {
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<ProductResponse> findById(@PathVariable Long id) {
-		return ResponseEntity.ok(service.findById(id));
+	public EntityModel<ProductResponse> findById(@PathVariable Long id) {
+		return assembler.toModel(service.findById(id));
 	}
 
 	@PutMapping("/{id}")

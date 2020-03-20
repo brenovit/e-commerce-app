@@ -10,11 +10,15 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name="product_category")
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
 public class ProductCategory {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,4 +27,8 @@ public class ProductCategory {
 	
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "category")
 	private Set<Product> products;
+	
+	public ProductCategory(Long id) {
+		this.id = id;
+	}
 }

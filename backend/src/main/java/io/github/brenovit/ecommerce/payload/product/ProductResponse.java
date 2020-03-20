@@ -4,12 +4,14 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Data
-public class ProductResponse {
+@EqualsAndHashCode(callSuper=false)
+public class ProductResponse{
     private Long id;
     private String name;
-    private BigDecimal price;
+    private BigDecimal unitPrice;
     private String description;
     private Date createdAt;
     private Date updatedAt;
