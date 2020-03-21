@@ -58,6 +58,16 @@ public class ProductRestController {
 				.collect(Collectors.toList());
 		return new CollectionModel<>(products, linkTo(methodOn(ProductRestController.class).findAll()).withSelfRel());		
 	}
+	
+	@GetMapping("/category/{id}")
+	public CollectionModel<EntityModel<ProductResponse>> findByCategoryId(
+			@PathVariable(name = "id", required = true) Long id,
+			@RequestParam(name = "page", required = false, defaultValue = "0") int page, 
+			@RequestParam(name = "size", required = false, defaultValue = "10") int size,
+			@RequestParam(name = "sortBy", required = false, defaultValue = "id") String sort) {
+		Page<ProductResponse> products = service.findByCategoryId(id, page, size, sort);		
+		return pagedResourcesAssembler.toModel(products, assembler);
+	}
 
 	@PostMapping
 	public ResponseEntity<ProductResponse> create(@Valid @RequestBody ProductRequest product) {

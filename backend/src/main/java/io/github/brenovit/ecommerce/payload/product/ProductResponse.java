@@ -17,5 +17,5 @@ public class ProductResponse{
     private Date createdAt;
     private Date updatedAt;
 	private String imageUrl;
-
+	private Long categoryId;
 }

@@ -29,24 +29,26 @@ public class ProductService extends InternalService {
 	@Autowired
 	private ProductRepository repository;
 	
-	public Page<ProductResponse> findAll(int page, int size, String sort) {
-		Page<ProductResponse> response = new PageImpl<>(new ArrayList<>());
-		Pageable paging = null;
-		
-		if(StringUtils.isNotBlank(sort)) {
-			paging = PageRequest.of(page, size, Sort.by(sort));
-		} else {
-			paging = PageRequest.of(page, size);
-		}
-		Page<Product> pagingResponse = repository.findAll(paging);		
+	public Page<ProductResponse> findAll(int page, int size, String sort) {		
+		Pageable pageable = getPageable(page, size, sort);
+		Page<Product> pagingResponse = repository.findAll(pageable);		
 		if(pagingResponse.hasContent()) {			 
-			 response = new PageImpl<>(parse(pagingResponse.getContent()), paging, pagingResponse.getTotalElements());
+			 return new PageImpl<>(parse(pagingResponse.getContent()), pageable, pagingResponse.getTotalElements());
 		}
-		return response;
+		return new PageImpl<>(new ArrayList<>());
 	}
 	
 	public List<ProductResponse> findAll(){
 		return parse(repository.findAll());
+	}	
+
+	public Page<ProductResponse> findByCategoryId(Long id, int page, int size, String sort) {
+		Pageable pageable = getPageable(page, size, sort);
+		Page<Product> pagingResponse = repository.findByCategoryId(id, pageable);		
+		if(pagingResponse.hasContent()) {			 
+			 return new PageImpl<>(parse(pagingResponse.getContent()), pageable, pagingResponse.getTotalElements());
+		}
+		return new PageImpl<>(new ArrayList<>());
 	}
 	
 	@SneakyThrows
@@ -75,5 +77,12 @@ public class ProductService extends InternalService {
 	public void delete(Long id) {
 		findById(id);
 		repository.deleteById(id);
+	}
+
+	private Pageable getPageable(int page, int size, String sort) {
+		if(StringUtils.isNotBlank(sort)) {
+			return PageRequest.of(page, size, Sort.by(sort));
+		}		
+		return PageRequest.of(page, size);
 	}
 }

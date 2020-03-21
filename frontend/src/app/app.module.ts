@@ -1,3 +1,5 @@
+import { FooterPaginationComponent } from "./components/footer-pagination/footer-pagination.component";
+import { ProductComponent } from "./components/product/product.component";
 import { ProductService } from "./services/product.service";
 import { BrowserModule } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
@@ -5,10 +7,24 @@ import { NgModule } from "@angular/core";
 import { AppComponent } from "./app.component";
 import { ProductListComponent } from "./components/product-list/product-list.component";
 import { HttpClientModule } from "@angular/common/http";
+import { Routes, RouterModule } from "@angular/router";
+
+const routes: Routes = [
+  { path: "category/:id", component: ProductListComponent },
+  { path: "category", component: ProductListComponent },
+  { path: "products", component: ProductListComponent },
+  { path: "", redirectTo: "/products", pathMatch: "full" },
+  { path: "**", redirectTo: "/products", pathMatch: "full" }
+];
 
 @NgModule({
-  declarations: [AppComponent, ProductListComponent],
-  imports: [BrowserModule, HttpClientModule],
+  declarations: [
+    AppComponent,
+    ProductListComponent,
+    ProductComponent,
+    FooterPaginationComponent
+  ],
+  imports: [RouterModule.forRoot(routes), BrowserModule, HttpClientModule],
   providers: [ProductService],
   bootstrap: [AppComponent]
 })

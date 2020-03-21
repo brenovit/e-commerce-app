@@ -25,10 +25,17 @@ public class ProductMapper {
     }
     
     public ProductResponse parse(Product request){
+    	mapperFactory
+    	.classMap(Product.class, ProductResponse.class)
+    	.field("category.id", "categoryId").byDefault()
+    	.register();
         return mapperFactory.getMapperFacade().map(request, ProductResponse.class);
     }
     
 	public List<ProductResponse> parse(List<Product> request) {
+		mapperFactory.classMap(Product.class, ProductResponse.class)
+		.field("category.id", "categoryId").byDefault()
+    	.register();
 		return mapperFactory.getMapperFacade().mapAsList(request, ProductResponse.class);
 	}
 
