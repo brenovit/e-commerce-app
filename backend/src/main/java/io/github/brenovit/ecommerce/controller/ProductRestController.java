@@ -8,6 +8,9 @@ import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +22,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.github.brenovit.ecommerce.assembler.ProducResponsetModelAssembler;
@@ -36,14 +40,24 @@ public class ProductRestController {
 
 	private final ProductService service;
 	private final ProducResponsetModelAssembler assembler;
-
+	@Autowired
+    private PagedResourcesAssembler<ProductResponse> pagedResourcesAssembler;
+	
 	@GetMapping	
+	public CollectionModel<EntityModel<ProductResponse>> findAll(
+			@RequestParam(name = "page", required = false, defaultValue = "0") int page, 
+			@RequestParam(name = "size", required = false, defaultValue = "10") int size,
+			@RequestParam(name = "sortBy", required = false, defaultValue = "id") String sort) {
+		Page<ProductResponse> products = service.findAll(page, size, sort);		
+		return pagedResourcesAssembler.toModel(products, assembler);
+	}
+	
 	public CollectionModel<EntityModel<ProductResponse>> findAll() {
 		List<EntityModel<ProductResponse>> products = service.findAll().stream()
 				.map(assembler::toModel)
 				.collect(Collectors.toList());
 		return new CollectionModel<>(products, linkTo(methodOn(ProductRestController.class).findAll()).withSelfRel());		
-	}		
+	}
 
 	@PostMapping
 	public ResponseEntity<ProductResponse> create(@Valid @RequestBody ProductRequest product) {

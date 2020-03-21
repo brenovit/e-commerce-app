@@ -6,10 +6,9 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import io.github.brenovit.ecommerce.exception.ApplicationException;
+import io.github.brenovit.ecommerce.exception.ResourceNotFoundException;
 import io.github.brenovit.ecommerce.models.ProductCategory;
 import io.github.brenovit.ecommerce.repository.ProductCategoryRepository;
-import io.github.brenovit.ecommerce.util.ErrorCode;
 import lombok.SneakyThrows;
 
 @Service
@@ -26,7 +25,7 @@ public class ProductCategoryService {
 	public ProductCategory findById(Long id){
 		Optional<ProductCategory> product = repository.findById(id);
 		if(!product.isPresent()) {
-			throw new ApplicationException(ErrorCode.PRODUCT_NOT_FOUND);
+			throw new ResourceNotFoundException();
 		}
 		return product.get();
 	}
