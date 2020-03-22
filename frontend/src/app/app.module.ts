@@ -1,3 +1,4 @@
+import { ProductMenuComponent } from "./components/product-menu/product-menu.component";
 import { ProductCategoryComponent } from "./components/product-category/product-category.component";
 import { ProductCategoryService } from "./services/product-category.service";
 import { FooterPaginationComponent } from "./components/footer-pagination/footer-pagination.component";
@@ -24,6 +25,7 @@ const routes: Routes = [
     AppComponent,
     ProductListComponent,
     ProductComponent,
+    ProductMenuComponent,
     ProductCategoryComponent,
     FooterPaginationComponent
   ],
