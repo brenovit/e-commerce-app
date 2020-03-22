@@ -7,33 +7,20 @@ import { ApiService } from "./api-service";
 
 export class ProductService extends ApiService {
   getProducts(search: Product): Observable<ProductList> {
+    let searchParameterName = "";
+    let searchParameterCategoryId = "";
+    if (search.name) {
+      searchParameterName = `&name=${search.name}`;
+    }
+    if (search.categoryId) {
+      searchParameterCategoryId = `&categoryId=${search.categoryId}`;
+    }
+
     return this.httpClient
       .get<GetResponse>(
         this.getUrl(
-          `v1/products?page=0&size=8&name=${search.name}&categoryId=${search.categoryId}`
+          `v1/products?page=0&size=8${searchParameterName}${searchParameterCategoryId}`
         )
-      )
-      .pipe(map(response => response));
-  }
-
-  searchProducts(keyword: string): Observable<ProductList> {
-    return this.httpClient
-      .get<GetResponse>(
-        this.getUrl(`v1/products?page=0&size=8&name=${keyword}`)
-      )
-      .pipe(map(response => response));
-  }
-
-  getProductList(): Observable<ProductList> {
-    return this.httpClient
-      .get<GetResponse>(this.getUrl("v1/products?page=0&size=8"))
-      .pipe(map(response => response));
-  }
-
-  getProductListByCategoryId(categoryId: number): Observable<ProductList> {
-    return this.httpClient
-      .get<GetResponse>(
-        this.getUrl(`v1/products?page=0&size=8&categoryId=${categoryId}`)
       )
       .pipe(map(response => response));
   }
