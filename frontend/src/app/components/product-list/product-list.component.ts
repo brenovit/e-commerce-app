@@ -26,8 +26,13 @@ export class ProductListComponent implements OnInit {
     });
   }
 
-  listProducts() {
-    const searchProduct: Product = new Product();
+  private listProducts() {
+    const searchProduct: Product = this.filterRouteParametersToProduct();
+    this.handleListProduct(searchProduct);
+  }
+
+  private filterRouteParametersToProduct(): Product {
+    let searchProduct: Product = new Product();
     const hasCategoryId: boolean = this.route.snapshot.paramMap.has("id");
     const hasSearchKeyword: boolean = this.route.snapshot.paramMap.has(
       "keyword"
@@ -41,7 +46,10 @@ export class ProductListComponent implements OnInit {
       this.currentCategoryName = this.route.snapshot.paramMap.get("name");
       searchProduct.categoryId = this.currentCategoryId;
     }
+    return searchProduct;
+  }
 
+  private handleListProduct(searchProduct: Product) {
     this.productService.getProducts(searchProduct).subscribe(data => {
       this.products = data.content;
       this.page = data.page;
