@@ -28,7 +28,17 @@ export class ProductListComponent implements OnInit {
 
   listProducts() {
     const hasCategoryId: boolean = this.route.snapshot.paramMap.has("id");
-    if (hasCategoryId) {
+    const hasSearchKeyword: boolean = this.route.snapshot.paramMap.has(
+      "keyword"
+    );
+
+    if (hasSearchKeyword) {
+      const keyword = this.route.snapshot.paramMap.get("keyword");
+      this.productService.searchProducts(keyword).subscribe(data => {
+        this.products = data.content;
+        this.page = data.page;
+      });
+    } else if (hasCategoryId) {
       this.currentCategoryId = +this.route.snapshot.paramMap.get("id");
       this.currentCategoryName = this.route.snapshot.paramMap.get("name");
       this.productService

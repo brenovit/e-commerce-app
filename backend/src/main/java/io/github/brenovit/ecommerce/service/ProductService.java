@@ -34,12 +34,13 @@ public class ProductService extends InternalService {
 		return parse(repository.findAll());
 	}	
 
-	public Page<ProductResponse> findAll(Long categoryId, int page, int size, String sort) {
+	public Page<ProductResponse> findAll(Long categoryId, String name, int page, int size, String sort) {
 		Pageable pageable = getPageable(page, size, sort);
 		Page<Product> pagingResponse = null;
 		Product p = new Product();
 		p.setCategory(new ProductCategory());
 		p.getCategory().setId(categoryId);
+		p.setName(name);
 		pagingResponse = repository.findAll(p, pageable);
 			
 		if(pagingResponse.hasContent()) {			 

@@ -11,6 +11,7 @@ import io.github.brenovit.ecommerce.models.Product;
 public interface ProductRepository extends JpaRepository<Product, Long>{
 	
     @Query(value="SELECT p FROM Product p WHERE "
-    		+ "(p.category.id = :#{#product.category.id} or :#{#product.category.id} is null)")
+    		+ "(p.category.id = :#{#product.category.id} OR :#{#product.category.id} IS NULL ) "
+    		+ "AND (p.name like %:#{#product.name}% OR :#{#product.name} IS NULL)")
 	Page<Product> findAll(@Param("product") Product product, Pageable pageable);
 }

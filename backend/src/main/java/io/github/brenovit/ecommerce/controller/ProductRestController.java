@@ -46,10 +46,11 @@ public class ProductRestController {
 	@GetMapping	
 	public CollectionModel<EntityModel<ProductResponse>> findAll(
 			@RequestParam(name = "categoryId", required = false) Long categoryId,
+			@RequestParam(name = "name", required = false) String name,
 			@RequestParam(name = "page", required = false, defaultValue = "0") int page, 
 			@RequestParam(name = "size", required = false, defaultValue = "10") int size,
 			@RequestParam(name = "sortBy", required = false, defaultValue = "id") String sort) {
-		Page<ProductResponse> products = service.findAll(categoryId, page, size, sort);		
+		Page<ProductResponse> products = service.findAll(categoryId, name, page, size, sort);		
 		return pagedResourcesAssembler.toModel(products, assembler);
 	}
 	
