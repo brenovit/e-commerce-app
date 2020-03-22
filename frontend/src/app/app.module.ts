@@ -1,3 +1,5 @@
+import { ProductCategoryComponent } from "./components/product-category/product-category.component";
+import { ProductCategoryService } from "./services/product-category.service";
 import { FooterPaginationComponent } from "./components/footer-pagination/footer-pagination.component";
 import { ProductComponent } from "./components/product/product.component";
 import { ProductService } from "./services/product.service";
@@ -22,10 +24,11 @@ const routes: Routes = [
     AppComponent,
     ProductListComponent,
     ProductComponent,
+    ProductCategoryComponent,
     FooterPaginationComponent
   ],
   imports: [RouterModule.forRoot(routes), BrowserModule, HttpClientModule],
-  providers: [ProductService],
+  providers: [ProductService, ProductCategoryService],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

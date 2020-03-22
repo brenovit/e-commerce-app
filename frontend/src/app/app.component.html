@@ -12,20 +12,7 @@
     </div>
     <div class="menu-sidebar-content js-scrollbar1">
       <nav class="navbar-sidebar">
-        <ul class="list-unstyled navbar-list">
-          <li>
-            <a href="#">Books</a>
-          </li>
-          <li>
-            <a href="#">Coffee Mugs</a>
-          </li>
-          <li>
-            <a href="#">Mouse Pads</a>
-          </li>
-          <li>
-            <a href="#">Luggage Tags</a>
-          </li>
-        </ul>
+        <app-product-category></app-product-category>
       </nav>
     </div>
   </aside>
@@ -63,7 +50,7 @@
     <!-- END HEADER DESKTOP-->
 
     <!-- MAIN CONTENT-->
-    <app-product-list></app-product-list>
+    <router-outlet></router-outlet>
     <!-- END MAIN CONTENT-->
   </div>
 </div>

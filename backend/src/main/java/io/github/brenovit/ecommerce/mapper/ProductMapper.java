@@ -3,6 +3,8 @@ package io.github.brenovit.ecommerce.mapper;
 import java.util.List;
 
 import io.github.brenovit.ecommerce.models.Product;
+import io.github.brenovit.ecommerce.models.ProductCategory;
+import io.github.brenovit.ecommerce.payload.product.ProductCategoryResponse;
 import io.github.brenovit.ecommerce.payload.product.ProductRequest;
 import io.github.brenovit.ecommerce.payload.product.ProductResponse;
 import lombok.experimental.UtilityClass;
@@ -23,7 +25,7 @@ public class ProductMapper {
     	.register();
         return mapperFactory.getMapperFacade().map(request, Product.class);
     }
-    
+  
     public ProductResponse parse(Product request){
     	mapperFactory
     	.classMap(Product.class, ProductResponse.class)
@@ -31,6 +33,14 @@ public class ProductMapper {
     	.register();
         return mapperFactory.getMapperFacade().map(request, ProductResponse.class);
     }
+    
+    public ProductCategoryResponse parse(ProductCategory request){
+        return mapperFactory.getMapperFacade().map(request, ProductCategoryResponse.class);
+    }
+    
+    public List<ProductCategoryResponse> parseCategory(List<ProductCategory> request) {
+		return mapperFactory.getMapperFacade().mapAsList(request, ProductCategoryResponse.class);
+	}
     
 	public List<ProductResponse> parse(List<Product> request) {
 		mapperFactory.classMap(Product.class, ProductResponse.class)

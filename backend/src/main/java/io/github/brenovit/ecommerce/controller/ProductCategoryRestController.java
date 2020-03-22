@@ -16,11 +16,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.github.brenovit.ecommerce.models.ProductCategory;
+import io.github.brenovit.ecommerce.payload.product.ProductCategoryResponse;
 import io.github.brenovit.ecommerce.service.ProductCategoryService;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/api/v1/products/categories")
+@RequestMapping("/api/v1/product-categories")
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RequiredArgsConstructor
 public class ProductCategoryRestController {
@@ -28,27 +29,28 @@ public class ProductCategoryRestController {
 	private final ProductCategoryService service;
 		
 	@GetMapping	
-	public ResponseEntity<List<ProductCategory>> findAll() {
+	public ResponseEntity<List<ProductCategoryResponse>> findAll() {
 		return ResponseEntity.ok(service.findAll());
 	}		
 
 	@PostMapping
-	public ResponseEntity<ProductCategory> create(@Valid @RequestBody ProductCategory product) {
+	public ResponseEntity<ProductCategoryResponse> create(@Valid @RequestBody ProductCategory product) {
 		return ResponseEntity.ok(service.save(product));
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<ProductCategory> findById(@PathVariable Long id) {
+	public ResponseEntity<ProductCategoryResponse> findById(@PathVariable Long id) {
 		return ResponseEntity.ok(service.findById(id));
 	}
 
 	@PutMapping("/{id}")
-	public ResponseEntity<ProductCategory> update(@PathVariable Long id, @Valid @RequestBody ProductCategory product) {
+	public ResponseEntity<ProductCategoryResponse> update(@PathVariable Long id, @Valid @RequestBody ProductCategory product) {
 		return ResponseEntity.ok(service.update(id, product));
 	}
 
 	@DeleteMapping("/{id}")
-	public ResponseEntity<ProductCategory> delete(@PathVariable Long id) {
-		return ResponseEntity.ok(service.delete(id));
+	public ResponseEntity<?> delete(@PathVariable Long id) {
+		service.delete(id);
+		return ResponseEntity.ok().build();
 	}
 }

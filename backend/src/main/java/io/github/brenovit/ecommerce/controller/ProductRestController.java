@@ -45,10 +45,11 @@ public class ProductRestController {
 	
 	@GetMapping	
 	public CollectionModel<EntityModel<ProductResponse>> findAll(
+			@RequestParam(name = "categoryId", required = false) Long categoryId,
 			@RequestParam(name = "page", required = false, defaultValue = "0") int page, 
 			@RequestParam(name = "size", required = false, defaultValue = "10") int size,
 			@RequestParam(name = "sortBy", required = false, defaultValue = "id") String sort) {
-		Page<ProductResponse> products = service.findAll(page, size, sort);		
+		Page<ProductResponse> products = service.findAll(categoryId, page, size, sort);		
 		return pagedResourcesAssembler.toModel(products, assembler);
 	}
 	
@@ -59,16 +60,6 @@ public class ProductRestController {
 		return new CollectionModel<>(products, linkTo(methodOn(ProductRestController.class).findAll()).withSelfRel());		
 	}
 	
-	@GetMapping("/category/{id}")
-	public CollectionModel<EntityModel<ProductResponse>> findByCategoryId(
-			@PathVariable(name = "id", required = true) Long id,
-			@RequestParam(name = "page", required = false, defaultValue = "0") int page, 
-			@RequestParam(name = "size", required = false, defaultValue = "10") int size,
-			@RequestParam(name = "sortBy", required = false, defaultValue = "id") String sort) {
-		Page<ProductResponse> products = service.findByCategoryId(id, page, size, sort);		
-		return pagedResourcesAssembler.toModel(products, assembler);
-	}
-
 	@PostMapping
 	public ResponseEntity<ProductResponse> create(@Valid @RequestBody ProductRequest product) {
 		return ResponseEntity.ok(service.save(product));

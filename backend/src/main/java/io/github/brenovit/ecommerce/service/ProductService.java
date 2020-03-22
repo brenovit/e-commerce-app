@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import io.github.brenovit.ecommerce.exception.ResourceNotFoundException;
 import io.github.brenovit.ecommerce.models.Product;
+import io.github.brenovit.ecommerce.models.ProductCategory;
 import io.github.brenovit.ecommerce.payload.product.ProductRequest;
 import io.github.brenovit.ecommerce.payload.product.ProductResponse;
 import io.github.brenovit.ecommerce.repository.ProductRepository;
@@ -27,24 +28,20 @@ import lombok.SneakyThrows;
 public class ProductService extends InternalService {	
 	
 	@Autowired
-	private ProductRepository repository;
-	
-	public Page<ProductResponse> findAll(int page, int size, String sort) {		
-		Pageable pageable = getPageable(page, size, sort);
-		Page<Product> pagingResponse = repository.findAll(pageable);		
-		if(pagingResponse.hasContent()) {			 
-			 return new PageImpl<>(parse(pagingResponse.getContent()), pageable, pagingResponse.getTotalElements());
-		}
-		return new PageImpl<>(new ArrayList<>());
-	}
+	private ProductRepository repository;	
 	
 	public List<ProductResponse> findAll(){
 		return parse(repository.findAll());
 	}	
 
-	public Page<ProductResponse> findByCategoryId(Long id, int page, int size, String sort) {
+	public Page<ProductResponse> findAll(Long categoryId, int page, int size, String sort) {
 		Pageable pageable = getPageable(page, size, sort);
-		Page<Product> pagingResponse = repository.findByCategoryId(id, pageable);		
+		Page<Product> pagingResponse = null;
+		Product p = new Product();
+		p.setCategory(new ProductCategory());
+		p.getCategory().setId(categoryId);
+		pagingResponse = repository.findAll(p, pageable);
+			
 		if(pagingResponse.hasContent()) {			 
 			 return new PageImpl<>(parse(pagingResponse.getContent()), pageable, pagingResponse.getTotalElements());
 		}
