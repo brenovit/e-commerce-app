@@ -9,8 +9,19 @@
         <div *ngFor="let product of products" class="col-md-3">
           <app-product [product]="product"></app-product>
         </div>
+
+        <div
+          *ngIf="products?.length === 0"
+          class="alert alert-warning col-md-12"
+          role="alert"
+        >
+          No products found.
+        </div>
       </div>
-      <app-footer-pagination [page]="page"></app-footer-pagination>
+      <app-footer-pagination
+        *ngIf="products?.length > 0"
+        [page]="page"
+      ></app-footer-pagination>
     </div>
   </div>
 </div>
