@@ -1,3 +1,4 @@
+import { ProductDetailsComponent } from "./components/product-details/product-details.component";
 import { ProductSearchComponent } from "./components/product-search/product-search.component";
 import { ProductMenuComponent } from "./components/product-menu/product-menu.component";
 import { ProductCategoryComponent } from "./components/product-category/product-category.component";
@@ -17,6 +18,7 @@ const routes: Routes = [
   { path: "category/:id/:name", component: ProductListComponent },
   { path: "category", component: ProductListComponent },
   { path: "products", component: ProductListComponent },
+  { path: "products/:id", component: ProductDetailsComponent },
   { path: "search/:keyword", component: ProductListComponent },
   { path: "", redirectTo: "/products", pathMatch: "full" },
   { path: "**", redirectTo: "/products", pathMatch: "full" }
@@ -27,6 +29,7 @@ const routes: Routes = [
     AppComponent,
     ProductListComponent,
     ProductListItemComponent,
+    ProductDetailsComponent,
     ProductMenuComponent,
     ProductCategoryComponent,
     ProductSearchComponent,

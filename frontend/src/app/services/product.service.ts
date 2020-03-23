@@ -17,16 +17,22 @@ export class ProductService extends ApiService {
     }
 
     return this.httpClient
-      .get<GetResponse>(
+      .get<GetProductsResponse>(
         this.getUrl(
           `v1/products?page=0&size=8${searchParameterName}${searchParameterCategoryId}`
         )
       )
       .pipe(map(response => response));
   }
+
+  getProduct(productId: number): Observable<Product> {
+    return this.httpClient
+      .get<Product>(this.getUrl(`v1/products/${productId}`))
+      .pipe(map(response => response));
+  }
 }
 
-interface GetResponse {
+interface GetProductsResponse {
   content: Product[];
   page: Page;
 }
