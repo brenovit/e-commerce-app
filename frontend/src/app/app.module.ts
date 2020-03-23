@@ -3,7 +3,7 @@ import { ProductMenuComponent } from "./components/product-menu/product-menu.com
 import { ProductCategoryComponent } from "./components/product-category/product-category.component";
 import { ProductCategoryService } from "./services/product-category.service";
 import { FooterPaginationComponent } from "./components/footer-pagination/footer-pagination.component";
-import { ProductComponent } from "./components/product/product.component";
+import { ProductListItemComponent } from "./components/product-list-item/product-list-item.component";
 import { ProductService } from "./services/product.service";
 import { BrowserModule } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
@@ -26,7 +26,7 @@ const routes: Routes = [
   declarations: [
     AppComponent,
     ProductListComponent,
-    ProductComponent,
+    ProductListItemComponent,
     ProductMenuComponent,
     ProductCategoryComponent,
     ProductSearchComponent,
