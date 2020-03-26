@@ -28,7 +28,15 @@ export class ProductListComponent implements OnInit {
 
   private listProducts() {
     const searchProduct: Product = this.filterRouteParametersToProduct();
-    this.handleListProduct(searchProduct);
+    let size: number = 8;
+    if (this.route.snapshot.queryParamMap.has("size")) {
+      size = +this.route.snapshot.queryParamMap.get("size");
+    }
+    let page: number = 0;
+    if (this.route.snapshot.queryParamMap.has("page")) {
+      page = +this.route.snapshot.queryParamMap.get("page");
+    }
+    this.handleListProduct(size, page, searchProduct);
   }
 
   private filterRouteParametersToProduct(): Product {
@@ -49,10 +57,16 @@ export class ProductListComponent implements OnInit {
     return searchProduct;
   }
 
-  private handleListProduct(searchProduct: Product) {
-    this.productService.getProducts(searchProduct).subscribe(data => {
-      this.products = data.content;
-      this.page = data.page;
-    });
+  private handleListProduct(
+    size: number,
+    page: number,
+    searchProduct: Product
+  ) {
+    this.productService
+      .getProducts(size, page, searchProduct)
+      .subscribe(data => {
+        this.products = data.content;
+        this.page = data.page;
+      });
   }
 }

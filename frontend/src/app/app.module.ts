@@ -8,6 +8,7 @@ import { ProductListItemComponent } from "./components/product-list-item/product
 import { ProductService } from "./services/product.service";
 import { BrowserModule } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
+import { FormsModule } from "@angular/forms";
 
 import { AppComponent } from "./app.component";
 import { ProductListComponent } from "./components/product-list/product-list.component";
@@ -35,7 +36,12 @@ const routes: Routes = [
     ProductSearchComponent,
     FooterPaginationComponent
   ],
-  imports: [RouterModule.forRoot(routes), BrowserModule, HttpClientModule],
+  imports: [
+    RouterModule.forRoot(routes),
+    BrowserModule,
+    HttpClientModule,
+    FormsModule
+  ],
   providers: [ProductService, ProductCategoryService],
   bootstrap: [AppComponent]
 })

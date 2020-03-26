@@ -4,11 +4,10 @@
     <div class="col-md-3">
       <div class="items">
         <label>Item per page</label>
-        <select>
-          <option>8</option>
-          <option>16</option>
-          <option>24</option>
-          <option>32</option>
+        <select [(ngModel)]="currentSize" (change)="refreshItemPerPageValue()">
+          <option *ngFor="let item of itensPerPageSize" value="{{ item }}">{{
+            item
+          }}</option>
         </select>
       </div>
     </div>
@@ -20,8 +19,12 @@
     </div>
     <div class="col-md-1">
       <div class="arrows">
-        <a href="#"><i class="fa fa-angle-left" aria-hidden="true"></i></a>
-        <a href="#"><i class="fa fa-angle-right" aria-hidden="true"></i></a>
+        <a href="/{{ context }}?size={{ currentSize }}&page={{ previousPage }}">
+          <i class="fa fa-angle-left" aria-hidden="true"></i
+        ></a>
+        <a href="/{{ context }}?size={{ currentSize }}&page={{ nextPage }}">
+          <i class="fa fa-angle-right" aria-hidden="true"></i
+        ></a>
       </div>
     </div>
   </div>
