@@ -12,8 +12,14 @@ import { ActivatedRoute } from "@angular/router";
 export class ProductListComponent implements OnInit {
   products: Product[];
   page: Page;
-  currentCategoryId: number;
+  currentCategoryId: number = 1;
+  previousCategoryId: number = 1;
   currentCategoryName: string;
+  searchMode: boolean = false;
+
+  thePageNumber: number = 1;
+  thePageSize: number = 8;
+  theTotalElements: number = 0;
 
   constructor(
     private productService: ProductService,
@@ -26,17 +32,20 @@ export class ProductListComponent implements OnInit {
     });
   }
 
-  private listProducts() {
+  public listProducts() {
     const searchProduct: Product = this.filterRouteParametersToProduct();
-    let size: number = 8;
-    if (this.route.snapshot.queryParamMap.has("size")) {
-      size = +this.route.snapshot.queryParamMap.get("size");
+
+    if (this.currentCategoryId != this.previousCategoryId) {
+      this.thePageNumber = 1;
     }
-    let page: number = 0;
-    if (this.route.snapshot.queryParamMap.has("page")) {
-      page = +this.route.snapshot.queryParamMap.get("page");
-    }
-    this.handleListProduct(size, page, searchProduct);
+
+    this.previousCategoryId = this.currentCategoryId;
+
+    this.handleListProduct(
+      this.thePageSize,
+      this.thePageNumber - 1,
+      searchProduct
+    );
   }
 
   private filterRouteParametersToProduct(): Product {
@@ -64,9 +73,16 @@ export class ProductListComponent implements OnInit {
   ) {
     this.productService
       .getProducts(size, page, searchProduct)
-      .subscribe(data => {
-        this.products = data.content;
-        this.page = data.page;
-      });
+      .subscribe(this.processResult());
+  }
+
+  private processResult() {
+    return data => {
+      this.products = data.content;
+      this.page = data.page;
+      this.thePageNumber = data.page.number + 1;
+      this.thePageSize = data.page.size;
+      this.theTotalElements = data.page.totalElements;
+    };
   }
 }

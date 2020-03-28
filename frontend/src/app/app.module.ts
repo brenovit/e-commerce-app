@@ -19,6 +19,7 @@ import { ProductListComponent } from "./components/product-list/product-list.com
 import { HttpClientModule } from "@angular/common/http";
 import { Routes, RouterModule } from "@angular/router";
 import { TokenStorageService } from "./services/token-storage.service";
+import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 
 const routes: Routes = [
   { path: "category/:id/:name", component: ProductListComponent },
@@ -49,7 +50,8 @@ const routes: Routes = [
     RouterModule.forRoot(routes),
     BrowserModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    NgbModule
   ],
   providers: [
     AuthService,
