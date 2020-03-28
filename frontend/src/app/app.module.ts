@@ -1,3 +1,7 @@
+import { AuthService } from "src/app/services/auth.service";
+import { AuthInterceptorProviders } from "./_helpers/auth.interceptor";
+import { RegisterComponent } from "./components/register/register.component";
+import { LoginComponent } from "./components/login/login.component";
 import { ProductDetailsComponent } from "./components/product-details/product-details.component";
 import { ProductSearchComponent } from "./components/product-search/product-search.component";
 import { ProductMenuComponent } from "./components/product-menu/product-menu.component";
@@ -14,9 +18,12 @@ import { AppComponent } from "./app.component";
 import { ProductListComponent } from "./components/product-list/product-list.component";
 import { HttpClientModule } from "@angular/common/http";
 import { Routes, RouterModule } from "@angular/router";
+import { TokenStorageService } from "./services/token-storage.service";
 
 const routes: Routes = [
   { path: "category/:id/:name", component: ProductListComponent },
+  { path: "login", component: LoginComponent },
+  { path: "register", component: RegisterComponent },
   { path: "category", component: ProductListComponent },
   { path: "products", component: ProductListComponent },
   { path: "products/:id", component: ProductDetailsComponent },
@@ -28,6 +35,8 @@ const routes: Routes = [
 @NgModule({
   declarations: [
     AppComponent,
+    LoginComponent,
+    RegisterComponent,
     ProductListComponent,
     ProductListItemComponent,
     ProductDetailsComponent,
@@ -42,7 +51,13 @@ const routes: Routes = [
     HttpClientModule,
     FormsModule
   ],
-  providers: [ProductService, ProductCategoryService],
+  providers: [
+    AuthService,
+    ProductService,
+    ProductCategoryService,
+    TokenStorageService,
+    AuthInterceptorProviders
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {}
