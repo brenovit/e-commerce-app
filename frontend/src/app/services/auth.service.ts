@@ -5,10 +5,10 @@ import { ApiService } from "./api-service";
 
 export class AuthService extends ApiService {
   login(credential: Credential): Observable<any> {
-    return this.httpClient.post(this.getUrl("signin"), credential);
+    return this.httpClient.post(this.getUrl("auth/signin"), credential);
   }
 
   register(user: User): Observable<any> {
-    return this.httpClient.post(this.getUrl("signup"), user);
+    return this.httpClient.post(this.getUrl("auth/signup"), user);
   }
 }

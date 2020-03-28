@@ -10,7 +10,7 @@ import { Component, OnInit } from "@angular/core";
   styleUrls: ["./login.component.css"]
 })
 export class LoginComponent implements OnInit {
-  form: Credential;
+  form: Credential = new Credential();
   isLoggedIn = false;
   isLoginFailed = false;
   errorMessage = "";
