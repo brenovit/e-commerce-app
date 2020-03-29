@@ -17,14 +17,14 @@ export class ProductListComponent implements OnInit {
   currentCategoryName: string;
   searchMode: boolean = false;
 
-  thePageNumber: number = 1;
-  thePageSize: number = 8;
-  theTotalElements: number = 0;
-
   constructor(
     private productService: ProductService,
     private route: ActivatedRoute
-  ) {}
+  ) {
+    this.page = new Page();
+    this.page.size = 8;
+    this.page.number = 0;
+  }
 
   ngOnInit() {
     this.route.paramMap.subscribe(() => {
@@ -32,20 +32,26 @@ export class ProductListComponent implements OnInit {
     });
   }
 
+  updatePageNumber(newPageNumber: number) {
+    this.page.number = newPageNumber;
+    this.listProducts();
+  }
+
+  updatePageSize(newPageSize: number) {
+    this.page.size = newPageSize;
+    this.listProducts();
+  }
+
   public listProducts() {
     const searchProduct: Product = this.filterRouteParametersToProduct();
 
     if (this.currentCategoryId != this.previousCategoryId) {
-      this.thePageNumber = 1;
+      this.page.number = 0;
     }
 
     this.previousCategoryId = this.currentCategoryId;
 
-    this.handleListProduct(
-      this.thePageSize,
-      this.thePageNumber - 1,
-      searchProduct
-    );
+    this.handleListProduct(this.page.size, this.page.number, searchProduct);
   }
 
   private filterRouteParametersToProduct(): Product {
@@ -80,9 +86,6 @@ export class ProductListComponent implements OnInit {
     return data => {
       this.products = data.content;
       this.page = data.page;
-      this.thePageNumber = data.page.number + 1;
-      this.thePageSize = data.page.size;
-      this.theTotalElements = data.page.totalElements;
     };
   }
 }

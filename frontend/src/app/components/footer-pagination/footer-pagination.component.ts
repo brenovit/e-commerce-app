@@ -1,6 +1,5 @@
-import { Router } from "@angular/router";
 import { Page } from "./../../common/page";
-import { Component, OnInit, Input, AfterViewInit } from "@angular/core";
+import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
 
 @Component({
   selector: "app-footer-pagination",
@@ -8,55 +7,36 @@ import { Component, OnInit, Input, AfterViewInit } from "@angular/core";
   styleUrls: ["./footer-pagination.component.css"]
 })
 export class FooterPaginationComponent implements OnInit {
-  @Input() page: Page;
-  @Input() context: string;
-  itensPerPageSize: number[];
-  currentSize: number;
+  @Output() changePageNumber: EventEmitter<number> = new EventEmitter<number>();
+  @Output() changePageSize: EventEmitter<number> = new EventEmitter<number>();
 
-  constructor(private router: Router) {
+  @Input() page: Page;
+
+  itensPerPageSize: number[];
+  pageNumber: number = 1;
+  newPageSize: number;
+
+  constructor() {
     this.itensPerPageSize = [8, 16, 24, 32];
   }
 
+  updatePageNumber() {
+    this.changePageNumber.emit(this.pageNumber - 1);
+  }
+
+  updatePageSize() {
+    this.changePageSize.emit(this.newPageSize);
+  }
+
   ngOnInit() {
-    this.currentSize = this.page.size;
+    this.newPageSize = this.page.size;
   }
 
-  refreshItemPerPageValue() {
-    this.router.navigateByUrl("/", { skipLocationChange: true }).then(() =>
-      this.router.navigate([`/${this.context}`], {
-        queryParams: { size: this.currentSize }
-      })
-    );
-  }
-
-  get previousPage() {
-    if (this.page.number > 0) {
-      return this.page.number - 1;
-    }
-
-    return 0;
-  }
-
-  get nextPage() {
-    if (this.page.number < this.page.totalPages) {
-      return this.page.number + 1;
-    }
-
-    return this.page.totalPages;
-  }
-
-  get firstItemNumber() {
+  get pageSize() {
     if (this.page === undefined) {
       return 0;
     }
-    return this.lastItemNumber - this.page.size + 1;
-  }
-
-  get lastItemNumber() {
-    if (this.page === undefined) {
-      return 0;
-    }
-    return (this.page.number + 1) * this.page.size;
+    return this.page.size;
   }
 
   get totalItens() {
