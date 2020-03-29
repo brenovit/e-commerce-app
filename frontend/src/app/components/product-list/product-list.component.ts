@@ -15,7 +15,6 @@ export class ProductListComponent implements OnInit {
   currentCategoryId: number = 1;
   previousCategoryId: number = 1;
   currentCategoryName: string;
-  searchMode: boolean = false;
 
   constructor(
     private productService: ProductService,
@@ -51,7 +50,7 @@ export class ProductListComponent implements OnInit {
 
     this.previousCategoryId = this.currentCategoryId;
 
-    this.handleListProduct(this.page.size, this.page.number, searchProduct);
+    this.handleListProduct(searchProduct);
   }
 
   private filterRouteParametersToProduct(): Product {
@@ -72,13 +71,9 @@ export class ProductListComponent implements OnInit {
     return searchProduct;
   }
 
-  private handleListProduct(
-    size: number,
-    page: number,
-    searchProduct: Product
-  ) {
+  private handleListProduct(searchProduct: Product) {
     this.productService
-      .getProducts(size, page, searchProduct)
+      .getProducts(this.page, searchProduct)
       .subscribe(this.processResult());
   }
 

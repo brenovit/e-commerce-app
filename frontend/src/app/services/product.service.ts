@@ -6,11 +6,7 @@ import { map } from "rxjs/operators";
 import { ApiService } from "./api-service";
 
 export class ProductService extends ApiService {
-  getProducts(
-    size: number,
-    page: number,
-    search: Product
-  ): Observable<ProductList> {
+  getProducts(page: Page, search: Product): Observable<ProductList> {
     let searchParameterName = "";
     let searchParameterCategoryId = "";
     if (search.name) {
@@ -23,7 +19,7 @@ export class ProductService extends ApiService {
     return this.httpClient
       .get<GetProductsResponse>(
         this.getUrl(
-          `v1/products?page=${page}&size=${size}${searchParameterName}${searchParameterCategoryId}`
+          `v1/products?page=${page.number}&size=${page.size}${searchParameterName}${searchParameterCategoryId}`
         )
       )
       .pipe(map(response => response));
