@@ -7,7 +7,7 @@ import { ActivatedRoute } from "@angular/router";
 @Component({
   selector: "app-product-list",
   templateUrl: "./product-list.component.html",
-  styleUrls: ["./product-list.component.css"]
+  styleUrls: ["./product-list.component.css"],
 })
 export class ProductListComponent implements OnInit {
   products: Product[];
@@ -39,6 +39,10 @@ export class ProductListComponent implements OnInit {
   updatePageSize(newPageSize: number) {
     this.page.size = newPageSize;
     this.listProducts();
+  }
+
+  addToCart(product: Product) {
+    console.log(product);
   }
 
   public listProducts() {
@@ -78,7 +82,7 @@ export class ProductListComponent implements OnInit {
   }
 
   private processResult() {
-    return data => {
+    return (data) => {
       this.products = data.content;
       this.page = data.page;
     };
