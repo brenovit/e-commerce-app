@@ -1,3 +1,5 @@
+import { CartStatusComponent } from "./components/cart-status/cart-status.component";
+import { LoginRegisterComponent } from "./components/login-register/login-register.component";
 import { AuthService } from "src/app/services/auth.service";
 import { AuthInterceptorProviders } from "./_helpers/auth.interceptor";
 import { RegisterComponent } from "./components/register/register.component";
@@ -23,14 +25,13 @@ import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 
 const routes: Routes = [
   { path: "category/:id/:name", component: ProductListComponent },
-  { path: "login", component: LoginComponent },
-  { path: "register", component: RegisterComponent },
+  { path: "login", component: LoginRegisterComponent },
   { path: "category", component: ProductListComponent },
   { path: "products", component: ProductListComponent },
   { path: "products/:id", component: ProductDetailsComponent },
   { path: "search/:keyword", component: ProductListComponent },
   { path: "", redirectTo: "/products", pathMatch: "full" },
-  { path: "**", redirectTo: "/products", pathMatch: "full" }
+  { path: "**", redirectTo: "/products", pathMatch: "full" },
 ];
 
 @NgModule({
@@ -38,28 +39,30 @@ const routes: Routes = [
     AppComponent,
     LoginComponent,
     RegisterComponent,
+    LoginRegisterComponent,
+    CartStatusComponent,
     ProductListComponent,
     ProductListItemComponent,
     ProductDetailsComponent,
     ProductMenuComponent,
     ProductCategoryComponent,
     ProductSearchComponent,
-    FooterPaginationComponent
+    FooterPaginationComponent,
   ],
   imports: [
     RouterModule.forRoot(routes),
     BrowserModule,
     HttpClientModule,
     FormsModule,
-    NgbModule
+    NgbModule,
   ],
   providers: [
     AuthService,
     ProductService,
     ProductCategoryService,
     TokenStorageService,
-    AuthInterceptorProviders
+    AuthInterceptorProviders,
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule {}
