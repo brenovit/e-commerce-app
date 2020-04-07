@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import io.github.brenovit.ecommerce.assembler.ProducResponsetModelAssembler;
+import io.github.brenovit.ecommerce.assembler.ProducResponseModelAssembler;
 import io.github.brenovit.ecommerce.models.Product;
 import io.github.brenovit.ecommerce.payload.product.ProductRequest;
 import io.github.brenovit.ecommerce.payload.product.ProductResponse;
@@ -39,7 +39,7 @@ import lombok.RequiredArgsConstructor;
 public class ProductRestController {
 
 	private final ProductService service;
-	private final ProducResponsetModelAssembler assembler;
+	private final ProducResponseModelAssembler assembler;
 	@Autowired
     private PagedResourcesAssembler<ProductResponse> pagedResourcesAssembler;
 	

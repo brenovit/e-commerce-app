@@ -7,11 +7,9 @@ import io.github.brenovit.ecommerce.models.ProductCategory;
 import io.github.brenovit.ecommerce.payload.product.ProductCategoryResponse;
 import io.github.brenovit.ecommerce.payload.product.ProductRequest;
 import io.github.brenovit.ecommerce.payload.product.ProductResponse;
-import lombok.experimental.UtilityClass;
 import ma.glasnost.orika.MapperFactory;
 import ma.glasnost.orika.impl.DefaultMapperFactory;
 
-@UtilityClass
 public class ProductMapper {
     private static MapperFactory mapperFactory;
 
@@ -19,14 +17,14 @@ public class ProductMapper {
         mapperFactory = new DefaultMapperFactory.Builder().build();
     }
 
-    public Product parse(ProductRequest request){    	
+    public static Product parse(ProductRequest request){    	
     	mapperFactory.classMap(ProductRequest.class, Product.class)
     	.field("categoryId", "category.id")
     	.register();
         return mapperFactory.getMapperFacade().map(request, Product.class);
     }
   
-    public ProductResponse parse(Product request){
+    public static ProductResponse parse(Product request){
     	mapperFactory
     	.classMap(Product.class, ProductResponse.class)
     	.field("category.id", "categoryId").byDefault()
@@ -34,15 +32,15 @@ public class ProductMapper {
         return mapperFactory.getMapperFacade().map(request, ProductResponse.class);
     }
     
-    public ProductCategoryResponse parse(ProductCategory request){
+    public static ProductCategoryResponse parse(ProductCategory request){
         return mapperFactory.getMapperFacade().map(request, ProductCategoryResponse.class);
     }
     
-    public List<ProductCategoryResponse> parseCategory(List<ProductCategory> request) {
+    public static List<ProductCategoryResponse> parseCategory(List<ProductCategory> request) {
 		return mapperFactory.getMapperFacade().mapAsList(request, ProductCategoryResponse.class);
 	}
     
-	public List<ProductResponse> parse(List<Product> request) {
+	public static List<ProductResponse> parse(List<Product> request) {
 		mapperFactory.classMap(Product.class, ProductResponse.class)
 		.field("category.id", "categoryId").byDefault()
     	.register();

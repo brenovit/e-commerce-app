@@ -9,7 +9,7 @@ import io.github.brenovit.ecommerce.controller.ProductRestController;
 import io.github.brenovit.ecommerce.payload.product.ProductResponse;
 
 @Component
-public class ProducResponsetModelAssembler implements RepresentationModelAssembler<ProductResponse, EntityModel<ProductResponse>> {
+public class ProducResponseModelAssembler implements RepresentationModelAssembler<ProductResponse, EntityModel<ProductResponse>> {
 
 	@Override
 	public EntityModel<ProductResponse> toModel(ProductResponse entity) {
