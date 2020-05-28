@@ -83,4 +83,11 @@ public class ExceptionHandle {
 		ApiError apiErros = new ApiError(ErrorCode.INVALID_CREDENTIAL);
 		return new ResponseEntity<ApiError>(apiErros, HttpStatus.BAD_REQUEST);
 	}
+	
+	@ExceptionHandler(ResourceNotFoundException.class)
+	public ResponseEntity<ApiError> processValidationError(ResourceNotFoundException ex) {
+		log.error(ex.getMessage(), ex);		
+		ApiError apiErros = new ApiError(ex.getCode(), ex.getMessage());
+		return new ResponseEntity<ApiError>(apiErros, HttpStatus.NOT_FOUND);
+	}	
 }

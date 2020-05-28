@@ -13,5 +13,4 @@ public class ProductRequest {
     private String imageUrl;
     private int unitsInStock;
     private Long categoryId;
-
 }
