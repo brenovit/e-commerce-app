@@ -3,7 +3,7 @@ Full Stack application using Angular and Spring Boot
 
 Run the commands
 For development enviroment:
-> docker run -d -p 3306:3306 --name mysql-ecommerce -e MYSQL_DATABASE=e-commerce -e MYSQL_ROOT_PASSWORD=password -e MYSQL_USER=root -e MYSQL_PASSWORD=password mysql/mysql-server:5.7
+> docker run -d -p 3306:3306 --name mysql-luvshop -e MYSQL_DATABASE=luvshop -e MYSQL_ROOT_PASSWORD=password -e MYSQL_USER=root -e MYSQL_PASSWORD=password mysql/mysql-server:5.7
 
 At backend folder run
 > mvn clean package
@@ -17,7 +17,7 @@ At root folder run
 > docker run -it --rm --name ps-back -p 8181:8181 -v /home/breno/git/personal/java/product-store/external-file:/root/config ps-back
 
 Go to
-http://localhost:8181/store/
+http://localhost:8181/luvshop/
 
 > docker run -it --rm --name ps-fron -p 8080:80 ps-front
 
